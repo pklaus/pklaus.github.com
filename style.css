@@ -1,0 +1,28 @@
+/* CSS Document */
+body{
+    margin: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #FEFEFE;
+    border-top: 13px solid #3366AA;
+}
+
+div#page {
+   margin: 10px 30px 10px 30px;
+}
+
+a:link, a:active,  a:visited {
+    color: #69B;
+    text-decoration: none;
+}
+
+a:hover {
+    color:#129;
+    text-decoration: none;
+}
+
+img{
+    margin:0px;
+    font-size:0px;
+    padding:0px;
+}
+
