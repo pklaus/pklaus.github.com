@@ -59,10 +59,16 @@
   </style>
   <script type="text/javascript">
     $(document).ready(function() {
-      $.getJSON('https://api.github.com/users/pklaus/repos?callback=?', function(data) {
+      $.getJSON('https://api.github.com/users/pklaus/repos?per_page=100&callback=?', function(data) {
         var items = [];
         $.each(data.data, function(key, repo) {
-          items.push('<div class="repo" title="' + repo.description + '"><div class="reponame"><a href="' + repo.html_url + '">' + repo.name + '</a></div><div class="repoforks"># of forks: ' + repo.forks + '</div><div class="repowatchers"># of watchers: ' + repo.watchers + '</div></div>');
+          items.push('<div class="repo" title="' + repo.description + '">');
+            items.push('<div class="reponame"><a href="' + repo.html_url + '">' + repo.name + '</a></div>');
+            items.push('<div># of stars: ' + repo.stargazers_count + '</div>');
+            items.push('<span class="repostars" style="display: none">' + repo.stargazers_count + '</span>');
+            items.push('<div># of forks: ' + repo.forks + '</div>');
+            items.push('<span class="repoforks" style="display: none">' + repo.forks + '</span>');
+          items.push('</div>');
         });
         $('<div/>', {
           'id': 'repos',
@@ -70,20 +76,20 @@
         }).appendTo('#container');
       });
     });
-    function compareWatchers(a, b) { return $(a).children('.repowatchers').text() < $(b).children('.repowatchers').text() ? 1 : -1; }
-    function compareForks(a, b) { return $(a).children('.repoforks').text() < $(b).children('.repoforks').text() ? 1 : -1; }
-    function sortByWatchers() { $('div.repo').sortElements(compareWatchers); }
+    function compareStars(a, b) { return parseInt($(a).children('.repostars').text()) < parseInt($(b).children('.repostars').text()) ? 1 : -1; }
+    function compareForks(a, b) { return parseInt($(a).children('.repoforks').text()) < parseInt($(b).children('.repoforks').text()) ? 1 : -1; }
+    function sortByStars() { $('div.repo').sortElements(compareStars); }
     function sortByForks() { $('div.repo').sortElements(compareForks); }
   </script>
 </head>
-<body onload="javascript:sortByWatchers()">
+<body onload="javascript:sortByStars()">
   <div id="page">
     <div id="container">
       <h1><a href="http://blog.philippklaus.de" alt="Philipp's private computing blog.">Philipp Klaus</a>'s <a href="https://github.com/pklaus">Github Repositories</a></h1>
       <p>Check out my <a href="http://zmoazeni.github.com/gitspective/#/timeline/pklaus" alt="Timeline of my activity on Github">Github timeline</a>!</p>
       <p>Here are the open source projects that I published on Github:</p>
       <div id="links">
-        <a href="#" onclick="javascript:sortByWatchers()">sort by # of watchers</a> |
+        <a href="#" onclick="javascript:sortByStars()">sort by # of stars</a> | 
         <a href="#" onclick="javascript:sortByForks()">sort by # of forks</a>
       </div>
     </div>
